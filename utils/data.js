@@ -25,7 +25,7 @@ const data = {
       brand: "Nike",
       rating: 4.5,
       numReviews: 8,
-      countInStock: 20,
+      countInStock: 0,
       description: "A popular shirt",
     },
     {
@@ -85,7 +85,7 @@ const data = {
       brand: "Casely",
       rating: 2.4,
       numReviews: 14,
-      countInStock: 20,
+      countInStock: 0,
       description: "A popular pants",
     },
   ],

@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import { Store } from "../utils/store";
 import CartTable from "../components/CartTable";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 const cart = () => {
   const router = useRouter();
@@ -63,4 +64,4 @@ const cart = () => {
   );
 };
 
-export default cart;
+export default dynamic(()=> Promise.resolve(cart), {ssr: false});

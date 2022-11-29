@@ -1,9 +1,14 @@
 import Link from 'next/link';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Store } from '../utils/store';
 
 const Header = () => {
   const { state: { cart } } = useContext(Store);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  
+    useEffect(() => {
+      setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+    },[cart.cartItems]);
 
   return (
     <>
@@ -12,8 +17,8 @@ const Header = () => {
           <p className='text-lg font-bold'>Galaxy Store</p>
         </Link>
         <div className='flex gap-6'>
-          <Link href='/cart'>Cart {cart.cartItems.length > 0  && (
-            <span className='ml-0 rounded-full bg-red-600 py-1 px-2 text-xs font-bold text-white'>{ cart.cartItems.reduce((a,c)=> a + c.quantity,0)}</span>
+          <Link href='/cart'>Cart {cartItemsCount > 0  && (
+            <span className='ml-0 rounded-full bg-red-600 py-1 px-2 text-xs font-bold text-white'>{ cartItemsCount}</span>
           )}</Link>
           <Link href='/login'>Login</Link>
         </div>

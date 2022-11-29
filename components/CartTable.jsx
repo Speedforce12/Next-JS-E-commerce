@@ -5,14 +5,19 @@ import { Store } from "../utils/store";
 import { FaRegTimesCircle } from "react-icons/fa";
 
 const CartTable = () => {
-  const { state, dispatch} = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems },
-    } = state;
-    const removeItem = (item) => {
-        dispatch({type:"REMOVE_CART_ITEM", payload: item});
-    }
+  } = state;
+  const removeItem = (item) => {
+    dispatch({ type: "REMOVE_CART_ITEM", payload: item });
+  };
+ 
+  const updateCart = (item, qty) => { 
+    const quantity = Number(qty)
+    dispatch({ type: "ADD_TO_CART" , payload: {...item, quantity} });
 
+  }
   return (
     <>
       <div className='overflow-x-auto md:cols-span-3 w-full'>
@@ -42,10 +47,18 @@ const CartTable = () => {
                     </span>
                   </Link>
                 </td>
-                <td className='p-5 text-right'>{item.quantity}</td>
+                <td className='p-5 text-right'>
+                  <select value={item.quantity} onChange={(e)=> updateCart(item, e.target.value)}>
+                    {[...Array(item.countInStock).keys()].map((x) => (
+                      <option key={x + 1} value={x + 1}>
+                        {x + 1}
+                      </option>
+                    ))}
+                  </select>
+                </td>
                 <td className='p-5 text-right'>${item.price}</td>
                 <td className='p-5 text-center'>
-                  <button onClick={()=> removeItem(item)}>
+                  <button onClick={() => removeItem(item)}>
                     <FaRegTimesCircle className='w-5 h-5' />
                   </button>
                 </td>

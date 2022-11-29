@@ -12,11 +12,13 @@
     "bcryptjs": "^2.4.3",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
+    "formik": "^2.2.9",
     "js-cookie": "^3.0.1",
     "next": "13.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.6.0"
+    "react-icons": "^4.6.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

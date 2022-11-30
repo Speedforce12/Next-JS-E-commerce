@@ -1,8 +1,12 @@
 import Layout from "../components/Layout";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import * as yup from "yup";
+import { signIn, useSession } from "next-auth/react";
+import { getError } from "../utils/error";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
@@ -12,10 +16,23 @@ const validationSchema = yup.object({
     .string()
     .email("Please Enter a valid email")
     .required("Email is required"),
-  password: yup.string().min(5, "password is more than 5 chars").required("Please enter a password"),
+  password: yup
+    .string()
+    .min(5, "password is more than 5 chars")
+    .required("Please enter a password"),
 });
 
 const login = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { redirect } = router.query;
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push(redirect || "/");
+    }
+  }, [router, session, redirect]);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,8 +42,18 @@ const login = () => {
     validateOnBlur: true,
     validationSchema: validationSchema,
 
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const result = await signIn("credentials", {
+          redirect: false,
+          ...values,
+        });
+        if (result.error) {
+          toast.error(result.error);
+        }
+      } catch (error) {
+        toast.error(getError(error));
+      }
     },
   });
 

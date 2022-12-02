@@ -16,9 +16,9 @@ const ProductDetail = () => {
   const router = useRouter();
   const { slug } = query;
   const product = data.products.find((x) => x.slug === slug);
-  if (!product) {
-    return <div className=''>Product Not Found</div>;
-  }
+   if (!product) {
+     return <Layout title='Product Not Found'>Product Not Found</Layout>;
+   }
 
   const handleAddToCart = () => {
     const existItem = cart.cartItems.find((x) => x.slug === product.slug);

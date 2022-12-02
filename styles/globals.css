@@ -10,9 +10,17 @@
     @apply rounded bg-amber-300 font-semibold py-2 px-4 shadow outline-none hover:bg-amber-400 active:bg-amber-500
 }
 
+.default-button {
+    @apply bg-gray-300 py-2 px-4 text-black font-semibold shadow outline-none hover:bg-gray-400 active:bg-gray-300 rounded
+}
+
 input,
 select,
 textarea {
 
     @apply rounded border p-2 outline-none ring-indigo-300 focus:ring
+}
+
+.dropdown-link {
+    @apply flex p-2 hover:bg-indigo-400/50 rounded text-indigo-800 font-semibold text-lg 
 }
